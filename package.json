@@ -2,14 +2,14 @@
   "name": "github-slack-pr-bot",
   "version": "0.0.1",
   "description": "fetch your prs from a given repo and set a reminder to review it.",
-  "main": "app.js",
+  "main": "src/app.js",
   "author": "EmmsDan",
   "license": "MIT",
   "private": false,
   "type": "module",
   "scripts": {
-    "dev": "nodemon app",
-    "start": "node app"
+    "dev": "nodemon src/app",
+    "start": "node src/app"
   },
   "dependencies": {
     "@slack/bolt": "^3.12.0",
