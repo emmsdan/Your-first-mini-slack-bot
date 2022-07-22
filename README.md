@@ -13,10 +13,14 @@ Built for Andela's Javascript community to teach basic of api integrations and s
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
+After cloning repositor `main` branch
 ```bash
 yarn install
+```
+
+Copy .env.example to .env and update values
+```bash
+cp .env.example .env
 ```
 
 ## Running
