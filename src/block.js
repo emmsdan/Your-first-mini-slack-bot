@@ -1,6 +1,12 @@
 export const generatePRsBlock = (prs) => {
   return !prs
-    ? []
+    ? [{
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `There are currently no PR Opened.`,
+      },
+    }]
     : prs.map((pr) => ({
         type: "section",
         text: {
