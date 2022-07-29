@@ -12,7 +12,7 @@ export const stopJob = (repos, repoName, job) => {
   if (!findRepo) {
     throw 'Repo does not exist.'
   }
-  if (findRepo && findRepo.count >= 4) {
+  if (findRepo && findRepo.count >= 2) {
     job.stop();
     job = null
     database.repos = repos.filter((rep) => rep.repo === repoName);

@@ -25,8 +25,7 @@ app.command("/watch", async ({ command, respond, ack }) => {
       await respond(generator({ repo, prs }));
     } catch (e) {
       console.log(e.response);
-      job.stop();
-      job = null
+      stopJob[{}], repo, job)
       await respond(`Error: ${e.message}`);
     }
   });

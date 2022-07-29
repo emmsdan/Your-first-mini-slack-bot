@@ -8,24 +8,13 @@ const $http = axios.create({
   },
 });
 
-export const getPullRequestAPI = async (userProject, arr) => {
+export const getPullRequest = async (userProject, arr) => {
   try {
     const resp = await $http.get(`repos/${userProject}/pulls`);
     return resp.data;
   } catch (e) {
+    console.log (e)
     return null;
   }
 };
 
-export const getPullRequest = (repo) => {
-  return getPullRequestAPI(repo, [
-    "title",
-    "url",
-    "state",
-    "merged_at",
-    "labels",
-    "body",
-    "requested_reviewers",
-    "user.login",
-  ]);
-};
