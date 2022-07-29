@@ -9,6 +9,7 @@ export const startJob = (time, job) => {
 
 export const stopJob = (repos, job) => {
   const findRepo = repos.find((rep) => rep.repo === repo);
+  console.log ( { repos })
   if (!findRepo) {
     throw 'Repo does not exist.'
   }

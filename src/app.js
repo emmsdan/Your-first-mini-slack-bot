@@ -8,7 +8,7 @@ import { generator } from "./block.js";
 
 app.command("/watch", async ({ command, respond, ack }) => {
   await ack();
-
+  
   // get repo command.text
   const [repo, ...others] = command.text?.toLowerCase()?.split(" ") ?? [];
 
@@ -27,7 +27,7 @@ app.command("/watch", async ({ command, respond, ack }) => {
       console.log(e.response);
       job.stop();
       job = null
-      await respond(`Error: ${e.messag}`);
+      await respond(`Error: ${e.message}`);
     }
   });
   // add to watch list
