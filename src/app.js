@@ -1,7 +1,7 @@
 import app from "./slack.js";
 import { port } from "./config.js";
 import { getMessageEntity } from "./wit.js";
-import { startJob } from "./cron.js";
+import { startJob, stopJob } from "./cron.js";
 import { getPullRequest } from "./github.js";
 import database from "./database.js";
 import { generator } from "./block.js";
@@ -17,11 +17,8 @@ app.command("/watch", async ({ command, respond, ack }) => {
 
   // create a job to run at scheduled interval
   let job = startJob(seconds, async () => {
-    const findRepo = database.repos.find((rep) => rep.repo === repo);
     try {
-      if (!findRepo) {
-        throw 'Repo does not exist.'
-      }
+      stopJob(database.repos, job)
       // fetch PRs from GitHub
       const prs = await getPullRequest(repo);
       // return the PRs back to slack
@@ -30,14 +27,8 @@ app.command("/watch", async ({ command, respond, ack }) => {
       console.log(e.response);
       job.stop();
       job = null
+      await respond(`Error: ${e.messag}`);
     }
-    if (findRepo && findRepo.count >= 4) {
-      job.stop();
-      job = null
-      database.repos = database.repos.filter((rep) => rep.repo === repo);
-    }
-    findRepo.count++
-    
   });
   // add to watch list
   database.repos.push({ repo, timer: seconds, job, count: 0 });
