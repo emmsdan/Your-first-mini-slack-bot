@@ -1,5 +1,6 @@
 import Bolt  from "@slack/bolt";
 import { port } from "./config.js";
+import database from "./database.js";
 
 // const receiver =  new Bolt.ExpressReceiver({  signingSecret: process.env.SLACK_SIGNING_SECRET, endpoints: '/', port})
 const app = new Bolt.App({
@@ -12,7 +13,7 @@ const app = new Bolt.App({
     {
       method: 'GET',
       handler: (req, res) => {
-        res.end('My Bot app');
+        res.end(JSON.stringify(database));
       },
       path: '/'
     }

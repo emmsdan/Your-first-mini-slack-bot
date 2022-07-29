@@ -17,17 +17,30 @@ app.command("/watch", async ({ command, respond, ack }) => {
 
   // create a job to run at scheduled interval
   let job = startJob(seconds, async () => {
+    const findRepo = database.repos.find((rep) => rep.repo === repo);
     try {
+      if (!findRepo) {
+        throw 'Repo does not exist.'
+      }
       // fetch PRs from GitHub
       const prs = await getPullRequest(repo);
       // return the PRs back to slack
       await respond(generator({ repo, prs }));
     } catch (e) {
       console.log(e.response);
+      job.stop();
+      job = null
     }
+    if (findRepo && findRepo.count >= 4) {
+      job.stop();
+      job = null
+      database.repos = database.repos.filter((rep) => rep.repo === repo);
+    }
+    findRepo.count++
+    
   });
   // add to watch list
-  database.repos.push({ repo, timer: seconds, job });
+  database.repos.push({ repo, timer: seconds, job, count: 0 });
 
   // Initial Responds
   await respond(`Added "${repo}" to watch list for ${others.join(" ")}`);

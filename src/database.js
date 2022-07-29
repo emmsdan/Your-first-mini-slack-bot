@@ -1,3 +1,3 @@
 export default {
-  repos: [],
+  repos: [{ repo: 'yes', count: 0}],
 };
