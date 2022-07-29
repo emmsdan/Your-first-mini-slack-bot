@@ -15,7 +15,7 @@ export const stopJob = (repos, repoName, job) => {
   if (findRepo && findRepo.count >= 2) {
     job.stop();
     job = null
-    database.repos = repos.filter((rep) => rep.repo === repoName);
+    repos = repos.filter((rep) => rep.repo === repoName);
   }
   findRepo.count++
 }
