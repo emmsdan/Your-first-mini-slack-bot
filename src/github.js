@@ -13,8 +13,7 @@ export const getPullRequest = async (userProject, arr) => {
     const resp = await $http.get(`repos/${userProject}/pulls`);
     return resp.data;
   } catch (e) {
-    console.log (e)
+    console.log(e);
     return null;
   }
 };
-

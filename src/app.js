@@ -9,16 +9,18 @@ import { generator } from "./block.js";
 app.command("/watch", async ({ command, respond, ack }) => {
   await ack();
   
+  // /watch
+
   // get repo command.text
   const [repo, ...others] = command.text?.toLowerCase()?.split(" ") ?? [];
-
+  
   // call Wit.ai for intent
   const { seconds } = await getMessageEntity(command.text);
 
   // create a job to run at scheduled interval
   let job = startJob(seconds, async () => {
     try {
-      stopJob(database.repos, repo, job)
+      stopJob(database.repos, repo, job);
       // fetch PRs from GitHub
       const prs = await getPullRequest(repo);
       // return the PRs back to slack
@@ -28,8 +30,9 @@ app.command("/watch", async ({ command, respond, ack }) => {
       await respond(`Error: ${e.message}`);
     }
   });
+  
   // add to watch list
-  database.repos.push({ repo, timer: seconds, job, count: 0 });
+  database.repos.push({ repo, timer: seconds, count: 0 });
 
   // Initial Responds
   await respond(`Added "${repo}" to watch list for ${others.join(" ")}`);
@@ -40,4 +43,3 @@ app.command("/watch", async ({ command, respond, ack }) => {
   await app.start();
   console.log("⚡️ Bolt app is running! " + port);
 })();
-

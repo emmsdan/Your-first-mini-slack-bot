@@ -1,4 +1,4 @@
-import Bolt  from "@slack/bolt";
+import Bolt from "@slack/bolt";
 import { port } from "./config.js";
 import database from "./database.js";
 
@@ -11,12 +11,12 @@ const app = new Bolt.App({
   port,
   customRoutes: [
     {
-      method: 'GET',
+      method: "GET",
       handler: (req, res) => {
         res.end(JSON.stringify(database));
       },
-      path: '/'
-    }
+      path: "/",
+    },
   ],
 });
 

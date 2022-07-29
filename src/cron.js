@@ -10,12 +10,12 @@ export const startJob = (time, job) => {
 export const stopJob = (repos, repoName, job) => {
   const findRepo = repos.find((rep) => rep.repo === repoName);
   if (!findRepo) {
-    throw 'Repo does not exist.'
+    throw "Repo does not exist.";
   }
-  if (findRepo && findRepo.count >= 2) {
+  if (findRepo && findRepo.count >= 90) {
     job.stop();
-    job = null
+    job = null;
     repos = repos.filter((rep) => rep.repo === repoName);
   }
-  findRepo.count++
-}
+  findRepo.count++;
+};
