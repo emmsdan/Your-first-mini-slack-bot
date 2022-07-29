@@ -18,7 +18,7 @@ app.command("/watch", async ({ command, respond, ack }) => {
   // create a job to run at scheduled interval
   let job = startJob(seconds, async () => {
     try {
-      stopJob(database.repos, job)
+      stopJob(database.repos, repo, job)
       // fetch PRs from GitHub
       const prs = await getPullRequest(repo);
       // return the PRs back to slack

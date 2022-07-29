@@ -7,16 +7,15 @@ export const startJob = (time, job) => {
   return cron.schedule(toCronJob, job);
 };
 
-export const stopJob = (repos, job) => {
-  const findRepo = repos.find((rep) => rep.repo === repo);
-  console.log ( { repos })
+export const stopJob = (repos, repoName, job) => {
+  const findRepo = repos.find((rep) => rep.repo === repoName);
   if (!findRepo) {
     throw 'Repo does not exist.'
   }
   if (findRepo && findRepo.count >= 4) {
     job.stop();
     job = null
-    database.repos = repos.filter((rep) => rep.repo === repo);
+    database.repos = repos.filter((rep) => rep.repo === repoName);
   }
   findRepo.count++
 }
